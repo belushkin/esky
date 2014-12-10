@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL);
 
 $autoload = new Composer\Autoload\ClassLoader();
 $autoload->add('OHT', FWPATH);

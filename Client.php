@@ -2,13 +2,11 @@
 
 namespace esky;
 
-use esky\dataProvider\dataProviderInterface;
-
 class Client
 {
     private $provider;
 
-    public function setProvider(dataProviderInterface $provider)
+    public function setProvider(\esky\dataProvider\dataProviderAbstract $provider)
     {
         $this->provider = $provider;
     }
