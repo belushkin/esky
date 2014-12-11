@@ -13,7 +13,7 @@ Data is provided in 3 sources
 - filtering data
 - showing data with current filters and sort order
 
-Filters that You should implement:
+### Filters that You should implement:
 - data source ("php", "json", "xml")
 - group ("europe", "world", "all")
 - filtering by selected field:
@@ -24,9 +24,10 @@ Filters that You should implement:
 - sort order (ascending, descending)
 
 Data source filter is required (if user not choose data source – error/exception should be handled)
+
 Other filters and sort are optional.
 
-Basic script usage:
+### Basic script usage:
 ```sh
 $ php index.php -s php
 $ php index.php -s json
