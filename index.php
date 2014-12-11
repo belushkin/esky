@@ -26,6 +26,9 @@ if (empty($options) ) {
     print "There was a problem reading in the options.\n\n";
     exit(1);
 }
+
+// http://www.ibm.com/developerworks/library/os-php-designptrns/
+//http://www.phptherightway.com/pages/Design-Patterns.html
 $errors = array();
 print_r($options);
 //var_dump(getopt("s:"));
