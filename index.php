@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 require 'vendor/autoload.php';
 
-$options = getopt("s:g::f::");
+$options = getopt("s:g::f::i::d::");
 if (empty($options) ) {
     print "There was a problem reading in the options.\n\n";
     return false;
@@ -13,6 +13,8 @@ if (empty($options) ) {
 $dataSource     = (in_array($options['s'], array('php', 'json', 'xml')))    ? $options['s'] : 'blank';
 $filterGroupBy  = empty($options['g'])                                      ? ''            : $options['g'];
 $filterByField  = empty($options['f'])                                      ? ''            : $options['f'];
+$sortByField    = empty($options['i'])                                      ? ''            : $options['i'];
+$sortDirection  = empty($options['d'])                                      ? ''            : $options['d'];
 
 $opts = array(
     'php'   => \esky\ClientFactory::create(
@@ -38,6 +40,7 @@ $filter->addFilter(new \esky\Filters\GroupBy($filterGroupBy));
 $filter->addFilter(new \esky\Filters\Code($filterByField));
 $filter->addFilter(new \esky\Filters\Price($filterByField));
 $filter->addFilter(new \esky\Filters\Name($filterByField));
+$filter->addFilter(new \esky\Filters\Sort($sortByField, $sortDirection));
 
 print_r($filter->filter($opts[$dataSource]->output()));
 
