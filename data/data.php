@@ -30,7 +30,7 @@ return array(
         ),
         "INR" => array(
             "name" => "rupia indyjska",
-            "value" => 4, 94,
+            "value" => 4.94,
         ),
     ),
 );

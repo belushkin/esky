@@ -2,35 +2,42 @@
 
 error_reporting(E_ALL);
 
-use esky\dataProvider\Json;
-use esky\dataProvider\PHP;
-use esky\dataProvider\Xml;
-use esky\Output\ArrayOutput;
-use esky\Output\JsonOutput;
-use esky\Output\XmlOutput;
-
 require 'vendor/autoload.php';
 
-$opts = array(
-    'php'   => \esky\ClientFactory::create(new PHP(__DIR__ . '/data/data.php'),     new ArrayOutput()),
-    'json'  => \esky\ClientFactory::create(new Json(__DIR__ . '/data/data.json'),   new JsonOutput()),
-    'xml'   => \esky\ClientFactory::create(new Xml(__DIR__ . '/data/data.xml'),     new XmlOutput())
-);
-
-assert($opts['php'] instanceof \esky\Client);
-assert($opts['json'] instanceof \esky\Client);
-assert($opts['xml'] instanceof \esky\Client);
-
-$options = getopt("s:");
+$options = getopt("s:g::f::");
 if (empty($options) ) {
     print "There was a problem reading in the options.\n\n";
-    exit(1);
+    return false;
 }
 
-// http://www.ibm.com/developerworks/library/os-php-designptrns/
-//http://www.phptherightway.com/pages/Design-Patterns.html
-$errors = array();
-print_r($options);
-//var_dump(getopt("s:"));
+$dataSource     = (in_array($options['s'], array('php', 'json', 'xml')))    ? $options['s'] : 'blank';
+$filterGroupBy  = empty($options['g'])                                      ? ''            : $options['g'];
+$filterByField  = empty($options['f'])                                      ? ''            : $options['f'];
 
-//print_r($opts['json']->output());
+$opts = array(
+    'php'   => \esky\ClientFactory::create(
+                    new \esky\dataProvider\PHP(__DIR__ . '/data/data.php'),
+                    new esky\Output\ArrayOutput()
+                ),
+    'json'  => \esky\ClientFactory::create(
+                    new \esky\dataProvider\Json(__DIR__ . '/data/data.json'),
+                    new esky\Output\JsonOutput()
+                ),
+    'xml'   => \esky\ClientFactory::create(
+                    new \esky\dataProvider\Xml(__DIR__ . '/data/data.xml'),
+                    new esky\Output\XmlOutput()
+                ),
+    'blank' => \esky\ClientFactory::create(
+                    new \esky\dataProvider\Blank(null),
+                    new esky\Output\ArrayOutput()
+                )
+);
+
+$filter = new \esky\Filters\Filter();
+$filter->addFilter(new \esky\Filters\GroupBy($filterGroupBy));
+$filter->addFilter(new \esky\Filters\Code($filterByField));
+$filter->addFilter(new \esky\Filters\Price($filterByField));
+$filter->addFilter(new \esky\Filters\Name($filterByField));
+
+print_r($filter->filter($opts[$dataSource]->output()));
+
