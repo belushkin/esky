@@ -40,7 +40,9 @@ $filter->addFilter(new \esky\Filters\GroupBy($filterGroupBy));
 $filter->addFilter(new \esky\Filters\Code($filterByField));
 $filter->addFilter(new \esky\Filters\Price($filterByField));
 $filter->addFilter(new \esky\Filters\Name($filterByField));
-$filter->addFilter(new \esky\Filters\Sort($sortByField, $sortDirection));
+$filter->addFilter(new \esky\Filters\SortCode($sortByField, $sortDirection));
+$filter->addFilter(new \esky\Filters\SortName($sortByField, $sortDirection));
+$filter->addFilter(new \esky\Filters\SortPrice($sortByField, $sortDirection));
 
 print_r($filter->filter($opts[$dataSource]->output()));
 
