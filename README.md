@@ -28,8 +28,25 @@ Data source filter is required (if user not choose data source – error/excepti
 Other filters and sort are optional.
 
 ### Basic script usage:
-```sh
+```php
+// Load the source: php, json, xml
 $ php index.php -s php
 $ php index.php -s json
 $ php index.php -s xml
+
+// Group By country: europe, world, all
+$ php index.php -sphp -geurope
+$ php index.php -sphp -gworld
+$ php index.php -sphp -gall
+
+// Filter by selected field
+$ php index.php -sphp -f'name = rupia indyjska'
+$ php index.php -sphp -gworld -f'name =rupia indyjska'
+$ php index.php -sphp -geurope -f'code=PLN'
+$ php index.php -sphp -f'price > 1'
+
+// Sort By: price, code, name
+$ php index.php -sphp -f'price > 1' -iprice -dASC
+$ php index.php -sphp -f'price > 1' -iprice -ddesc
+$ php index.php -sxml -gworld -f'price > 0.2' -iprice -ddesc
 ```
