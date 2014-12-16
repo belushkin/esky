@@ -51,5 +51,5 @@ $ php index.php -sphp -f'price > 1' -iprice -ddesc
 $ php index.php -sxml -gworld -f'price > 0.2' -iprice -ddesc
 
 // Run tests:
-// vendor/bin/phpunit -c tests/phpunit.xml tests/
+// $ vendor/bin/phpunit -c tests/phpunit.xml tests/
 ```
